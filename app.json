@@ -1,0 +1,40 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ],
+  "env": {
+    "ACCESS_KEY": {
+      "required": true
+    },
+    "ACCELA_APP_ID": {
+      "required": true
+    },
+    "ACCELA_APP_SECRET": {
+      "required": true
+    },
+    "ACCELA_USERNAME": {
+      "required": true
+    },
+    "ACCELA_PASSWORD": {
+      "required": true
+    },
+    "ACCELA_AGENCY": {
+      "required": true
+    },
+    "ACCELA_ENVIRONMENT": {
+      "required": true
+    },
+    "ACCELA_SCOPE": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "name": "accela-microservice-py",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
