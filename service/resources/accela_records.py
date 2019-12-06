@@ -40,8 +40,11 @@ class AccelaRecords(AccelaSvc):
 
     def on_post(self, req, resp):
         """ POST requests for records """
-        if 'fields' in req.params and req.content_length:
-            params = req.params['fields']
+        if req.content_length:
+            params = {}
+            if req.params:
+                params = req.params
+
             record = req.stream.read(sys.maxsize)
 
             self.init()
