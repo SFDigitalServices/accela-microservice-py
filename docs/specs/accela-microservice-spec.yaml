@@ -1,0 +1,83 @@
+openapi: '3.0.0'
+
+info:
+  title: SFDS ACCELA MICROSERVICE v1
+  description: This microservice interacts with Accela platforms
+  version: 1.0.1
+
+servers:
+  - url: https://<accela-microservice-server>
+    description: SFDS Accela microservice server
+
+paths:
+  /records/{ids}:
+    get: 
+      description: Gets the requested record(s).
+      parameters: 
+        - name: ids
+          description: Comma-delimited IDs of the records to fetch.
+          in: path
+          schema: 
+            type: string
+            example: "AGENCY-ABCDEF-00000-00123"
+          required: true
+          
+      responses:
+        '200': 
+          description: OK
+          content:
+           application/json:
+              schema:
+                type: string
+                example: 
+                  {
+                    "result": [
+                      {
+                        "name": "Accela Example",
+                        "id": "AGENCY-ABCDEF-00000-00123",
+                        "description": "Example Testing of Accela",
+                        "customId": "2019-000001PRJ"
+                      }
+                    ],
+                    "status": 200
+                  }
+  /records:
+    post:
+      description: Creates a new, full record
+      parameters: 
+        - name: fields
+          description: Comma-delimited names of fields to be returned in the response. 
+          in: query
+          schema: 
+            type: string
+            example: "customId,id"
+      requestBody:
+        required: true
+        description: The create record information to be added.
+        content: 
+          application/json:
+            schema:
+              type: object
+              example:
+                {
+                  "type":{"id":"Planning-Project-Project-PRJ"},
+                  "name": "Accela Example",
+                    "description": "Example Testing of Accela"
+                }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+                schema:
+                  type: string
+                  example: 
+                    {
+                        "result": {
+                            "id": "AGENCY-ABCDEF-00000-00123",
+                            "customId": "2019-000001PRJ"
+                        },
+                        "status": 200
+                    }
+          
+  
