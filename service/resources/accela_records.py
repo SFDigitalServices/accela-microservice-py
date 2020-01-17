@@ -9,19 +9,15 @@ from .accela_svc import AccelaSvc
 @falcon.before(validate_access)
 class AccelaRecords(AccelaSvc):
     """ Records class """
-    def on_get(self, _req, resp, **kwarg):
+    def on_get(self, req, resp, **kwarg):
         """ GET requests for records """
         if 'ids' in kwarg:
-            if not kwarg['ids']:
-                resp.status = falcon.HTTP_400
-                msg = "Record ids is required"
-                resp.body = json.dumps(jsend.error(msg))
-                return
 
             self.init()
 
             record_id = kwarg['ids']
-            response = self.accela.records.get_records(record_id, None, 'AccessToken')
+            params = req.params
+            response = self.accela.records.get_records(record_id, params, 'AccessToken')
 
             # default
             resp.status = falcon.HTTP_400
@@ -34,12 +30,13 @@ class AccelaRecords(AccelaSvc):
 
         else:
             resp.status = falcon.HTTP_400
-            msg = "Parameter missing"
+            msg = "Record ids is required"
             resp.body = json.dumps(jsend.error(msg))
             return
 
     def on_post(self, req, resp):
         """ POST requests for records """
+
         if req.content_length:
             params = {}
             if req.params:
@@ -63,3 +60,56 @@ class AccelaRecords(AccelaSvc):
             msg = "The create record information is missing"
             resp.body = json.dumps(jsend.error(msg))
             return
+
+    def on_put(self, req, resp, **kwarg):
+        """ PUT requests for records """
+        if 'ids' in kwarg:
+
+            self.init()
+
+            record_ids = kwarg['ids']
+
+            if req.content_length:
+
+                params = {}
+                if req.params:
+                    params = req.params
+
+                data = req.stream.read(sys.maxsize)
+
+                if 'path' in kwarg:
+                    path = kwarg['path']
+                    response = None
+
+                    if path == 'customForms':
+                        response = self.accela.records.update_record_custom_forms(
+                            record_ids, data, params)
+                    elif path == 'customTables':
+                        response = self.accela.records.update_record_custom_tables(
+                            record_ids, data, params)
+
+                     # if successful
+                    if response and response.status_code == 200:
+                        resp.status = falcon.HTTP_200
+                        resp.body = json.dumps(response.json())
+                        return
+
+                    resp.status = falcon.HTTP_400
+                    msg = "Path information is invalid"
+                    resp.body = json.dumps(jsend.error(msg))
+                    return
+
+                resp.status = falcon.HTTP_400
+                msg = "Path information is missing"
+                resp.body = json.dumps(jsend.error(msg))
+                return
+
+            resp.status = falcon.HTTP_400
+            msg = "Update information is missing"
+            resp.body = json.dumps(jsend.error(msg))
+            return
+
+        resp.status = falcon.HTTP_400
+        msg = "Record ids is required"
+        resp.body = json.dumps(jsend.error(msg))
+        return
