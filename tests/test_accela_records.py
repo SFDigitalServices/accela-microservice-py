@@ -24,7 +24,9 @@ def test_records_no_access_key():
 
 def test_get_records_ids(client):
     """ Test Get Records with ids """
-    response = client.simulate_get('/records/CCSF-18CAP-00000-008YI')
+    response = client.simulate_get(
+        '/records/CCSF-18CAP-00000-008YI',
+        params={'expand':'customTables,customForms'})
     assert response.status_code == 200
 
     content = json.loads(response.content)
@@ -34,7 +36,7 @@ def test_get_records_ids(client):
 
     response = content['result'][0]
 
-    possible_keys = ['name', 'status', 'id', 'description']
+    possible_keys = ['name', 'status', 'id', 'description', 'customTables', 'customForms']
     assert len(list(set(response.keys() & possible_keys))) == len(possible_keys)
 
 def test_get_records_empty(client):
@@ -62,9 +64,52 @@ def test_create_record(client):
         assert 'result' in content
         if 'result' in content:
             assert 'id' in content['result']
+            record_id = content['result']['id']
             assert 'customId' in content['result']
+
+            # Test update_record_custom_tables
+            with open('tests/mocks/update_record_custom_tables.json', 'r') as file_obj:
+                mock_custom_tables = json.load(file_obj)
+
+            assert mock_custom_tables
+            response = client.simulate_put(
+                '/records/'+record_id+'/customTables',
+                params={'ids':record_id},
+                body=json.dumps(mock_custom_tables))
+            assert response.status_code == 200
+            content = json.loads(response.content)
+            if 'status' in content:
+                assert content['status'] == 200
+
+            # Test update_record_custom_forms
+            with open('tests/mocks/update_record_custom_forms.json', 'r') as file_obj:
+                mock_custom_forms = json.load(file_obj)
+
+            assert mock_custom_tables
+            response = client.simulate_put(
+                '/records/'+record_id+'/customForms',
+                params={'ids':record_id},
+                body=json.dumps(mock_custom_forms))
+            assert response.status_code == 200
+            content = json.loads(response.content)
+            if 'status' in content:
+                assert content['status'] == 200
 
 def test_create_record_empty(client):
     """ Test Create Record with empty post body """
     response = client.simulate_post('/records')
+    assert response.status_code == 400
+
+def test_update_record_invalid(client):
+    """ Test Update Record with invalid parameters """
+    response = client.simulate_put('/records')
+    assert response.status_code == 400
+
+    response = client.simulate_put('/records/123')
+    assert response.status_code == 400
+
+    response = client.simulate_put('/records/123', body='stuff')
+    assert response.status_code == 400
+
+    response = client.simulate_put('/records/123/stuff', body='stuff')
     assert response.status_code == 400

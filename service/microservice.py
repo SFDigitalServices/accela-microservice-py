@@ -17,6 +17,7 @@ def start_service():
     api = falcon.API()
     api.add_route('/welcome', Welcome())
     api.add_route('/records/{ids}', AccelaRecords())
+    api.add_route('/records/{ids}/{path}', AccelaRecords())
     api.add_route('/records', AccelaRecords())
     api.add_sink(default_error, '')
     return api
