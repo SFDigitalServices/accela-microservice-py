@@ -1,0 +1,252 @@
+{
+	"type":{"id":"Planning-Project-Project-PRJ"},
+	"name": "Accela API Automated Test",
+	"description": "Automated Testing of Accela API",
+	"parcels" : 
+	[
+		{
+			"parcelNumber" : "3512008"
+		}
+	],
+	"contacts": 
+	[
+		{
+			"firstName": "John",
+			"lastName": "Smith",
+			"email": "test@test.com",
+			"phone1": "415-111-1111",
+			"address": {
+				"addressLine1": "123 main st",
+				"addressLine2": "apt 100",
+				"city": "San Francisco",
+				"country": {"text": "US", "value": "US"},
+				"postalCode": "94111",
+				"state": {"text": "CA", "value": "CA"}
+			},
+			"type": {"text": "Applicant", "value": "Applicant"}
+		},
+		{
+			"firstName": "Andy",
+			"lastName": "Smith",
+			"email": "test@test.com",
+			"phone1": "415-111-1111",
+			"address": {
+				"addressLine1": "123 main st",
+				"addressLine2": "apt 100",
+				"city": "San Francisco",
+				"country": {"text": "US", "value": "US"},
+				"postalCode": "94111",
+				"state": {"text": "CA", "value": "CA"}
+			},
+			"type": {"text": "Agent / Owner", "value": "Agent / Owner"}
+		},
+		{
+			"firstName": "Bill",
+			"lastName": "Smith",
+			"email": "test@test.com",
+			"phone1": "415-111-1111",
+			"address": {
+				"addressLine1": "123 main st",
+				"addressLine2": "apt 100",
+				"city": "San Francisco",
+				"country": {"text": "US", "value": "US"},
+				"postalCode": "94111",
+				"state": {"text": "CA", "value": "CA"}
+			},
+			"type": {"text": "Billing Contact", "value": "Billing Contact"}
+		},
+		{
+			"firstName": "Mary",
+			"lastName": "Smith",
+			"email": "test@test.com",
+			"phone1": "415-111-1111",
+			"address": {
+				"addressLine1": "123 main st",
+				"addressLine2": "apt 100",
+				"city": "San Francisco",
+				"country": {"text": "US", "value": "US"},
+				"postalCode": "94111",
+				"state": {"text": "CA", "value": "CA"}
+			},
+			"type": {"text": "Architect", "value": "Architect"}
+		},
+		{
+			"firstName": "Lisa",
+			"lastName": "Smith",
+			"organizationName": "Smith and Co",
+			"email": "test@test.com",
+			"phone1": "415-111-1111",
+			"address": {
+				"addressLine1": "123 main st",
+				"addressLine2": "apt 100",
+				"city": "San Francisco",
+				"country": {"text": "US", "value": "US"},
+				"postalCode": "94111",
+				"state": {"text": "CA", "value": "CA"}
+			},
+			"type": {"text": "Engineer", "value": "Engineer"}
+		}
+	],
+	"owners": [
+		{
+			"fullName": "Bob Smith",
+			"email": "test@test.com",
+			"phone": "4151111111",
+			"mailAddress": {
+				"addressLine1": "123 main st",
+				"addressLine2": "apt 100",
+				"city": "San Francisco",
+				"postalCode": "94111",
+				"state": {
+					"value": "CA",
+					"text": "CA"
+				},
+				"country": {
+					"value": "US",
+					"text": "US"
+				}
+			}
+		}
+	],
+	"customForms" :
+	[
+		{
+			"id": "PLN_PRJ-ENTITLEMENT.cTYPE",
+			"Job Value": "1000"
+		},
+		{
+			"id": "PLN_PRJ-EE.cSCREENING",
+			"Lot Split Slope": "Yes",
+			"Maher": "Yes",
+			"Construction Duration": "30",
+			"Excavation-Soil Disturbance": "No",
+			"Amount of Excavation": "100",
+			"Area of Excavation": "100",
+			"Landslide-Liquefaction": "Yes"
+		},
+		{
+			"id": "PLN_PRJ-CEQA.cIMPACTS",
+			"Transportation": "CHECKED"
+		}
+	],
+	"customTables": [
+		{
+			"id": "PLN_PRJ-PROJECT.cFEATURES",
+			"rows": [
+				{
+					"action" : "add",
+					"fields": {
+						"Project Feature": "Dwelling Units-Affordable",
+						"Proposed Unit(s)": "1",
+						"Existing Unit(s)": "0"
+					}
+				},
+				{
+					"action" : "add",
+					"fields": {
+						"Project Feature": "Dwelling Units-Market Rate",
+						"Proposed Unit(s)": "3",
+						"Existing Unit(s)": "2"
+					}
+				},
+				{
+					"action" : "add",
+					"fields": {
+						"Project Feature": "Parking Spaces",
+						"Proposed Unit(s)": "3",
+						"Existing Unit(s)": "2"
+					}
+				},
+				{
+					"action" : "add",
+					"fields": {
+						"Project Feature": "Stories Number",
+						"Proposed Unit(s)": "3",
+						"Existing Unit(s)": "2"
+					}
+				},
+				{
+					"action" : "add",
+					"fields": {
+						"Project Feature": "Building Number",
+						"Proposed Unit(s)": "2",
+						"Existing Unit(s)": "1"
+					}
+				},
+				{
+					"action" : "add",
+					"fields": {
+						"Project Feature": "Bicycle Spaces",
+						"Proposed Unit(s)": "10",
+						"Existing Unit(s)": "5"
+					}
+				}
+			]
+		},
+		{
+			"id": "PLN_PRJ-GENERAL.cLAND.cUSE.cPROFILE",
+			"rows": [
+				{
+					"action" : "add",
+					"fields": {
+						"Land Use Category": "Parking GSF",
+						"Proposed": "2000",
+						"Net New": "1000",
+						"Existing": "1000"
+					}
+				},
+				{
+					"action" : "add",
+					"fields": {
+						"Land Use Category": "Residential",
+						"Proposed": "3",
+						"Net New": "1",
+						"Existing": "2"
+					}
+				},
+				{
+					"action" : "add",
+					"fields": {
+						"Land Use Category": "Retail/Commercial",
+						"Proposed": "2",
+						"Net New": "1",
+						"Existing": "1"
+					}
+				}
+			]
+		},
+		{
+			"id": "PLN_PRJ-LAND.cUSE.c.1.cRESIDENTIAL",
+			"rows": [
+				{
+					"action" : "add",
+					"fields": {
+						"Dwelling Unit Type": "ADU Studio",
+						"Proposed": "1",
+						"Existing": "0",
+						"ADU Area": "500"
+					}
+				},
+				{
+					"action" : "add",
+					"fields": {
+						
+						"Dwelling Unit Type": "ADU One Bedroom",
+						"Proposed": "2",
+						"Existing": "1",
+						"ADU Area": "1000"
+					}
+				},
+				{
+					"action" : "add",
+					"fields": {
+						"Dwelling Unit Type": "ADU Three Bedroom (and +)",
+						"Proposed": "2",
+						"Existing": "1",
+						"ADU Area": "1500"
+					}
+				}
+			]
+		}
+	]
+}

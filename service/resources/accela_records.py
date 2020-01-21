@@ -3,6 +3,7 @@ import sys
 import json
 import jsend
 import falcon
+import sentry_sdk
 from .hooks import validate_access
 from .accela_svc import AccelaSvc
 
@@ -27,6 +28,12 @@ class AccelaRecords(AccelaSvc):
             if response.status_code == 200:
                 resp.status = falcon.HTTP_200
                 resp.body = json.dumps(response.json())
+            else:
+                with sentry_sdk.configure_scope() as scope:
+                    scope.set_extra(
+                        'get_records',
+                        {'ids':record_id, 'params':params, 'response':response.text})
+                sentry_sdk.capture_message('accela.get_records', 'error')
 
         else:
             resp.status = falcon.HTTP_400
@@ -55,6 +62,12 @@ class AccelaRecords(AccelaSvc):
             if response.status_code == 200:
                 resp.status = falcon.HTTP_200
                 resp.body = json.dumps(response.json())
+            else:
+                with sentry_sdk.configure_scope() as scope:
+                    scope.set_extra(
+                        'create_record',
+                        {'params':params, 'record':record, 'response':response.text})
+                sentry_sdk.capture_message('accela.create_record', 'error')
         else:
             resp.status = falcon.HTTP_400
             msg = "The create record information is missing"
@@ -88,10 +101,20 @@ class AccelaRecords(AccelaSvc):
                         response = self.accela.records.update_record_custom_tables(
                             record_ids, data, params)
 
-                     # if successful
-                    if response and response.status_code == 200:
-                        resp.status = falcon.HTTP_200
-                        resp.body = json.dumps(response.json())
+                    # if successful
+                    if response is not None:
+                        if response.status_code == 200:
+                            resp.status = falcon.HTTP_200
+                            resp.body = json.dumps(response.json())
+                            return
+                        resp.status = falcon.HTTP_400
+                        resp.body = json.dumps(jsend.error(response.text))
+
+                        with sentry_sdk.configure_scope() as scope:
+                            scope.set_extra(path,
+                                            {'ids':record_ids, 'params':params,
+                                             'data':data, 'response':response.text})
+                        sentry_sdk.capture_message('accela.'+path, 'error')
                         return
 
                     resp.status = falcon.HTTP_400
