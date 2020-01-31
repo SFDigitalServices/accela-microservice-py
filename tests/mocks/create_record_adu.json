@@ -115,6 +115,27 @@
 			"Job Value": "1000"
 		},
 		{
+			"id": "PLN_PRJ-RESIDENTIAL.cTYPE",
+			"Change of Dwelling Units": "Yes"
+		},
+		{
+			"id": "PLN_PRJ-PROJECT.cDESCRIPTION",
+			"Other Desc.": "Other Description",
+			"Facade Alterations": "CHECKED",
+			"Additions": "CHECKED",
+			"Change of Use": "CHECKED",
+			"Legislative-Zoning Change": "CHECKED",
+			"Lot Line Adjustment-Subdivision": "CHECKED",
+			"Demolition": "CHECKED",
+			"New Construction": "CHECKED",
+			"ROW Improvements": "CHECKED",
+			"Other": "CHECKED"
+		},
+		{
+			"id": "PLN_PRJ-PROPOSED.cWORK.cCHECKLIST",
+			"Deck, terrace construction, or fences": "CHECKED"
+		},
+		{
 			"id": "PLN_PRJ-EE.cSCREENING",
 			"Lot Split Slope": "Yes",
 			"Maher": "Yes",
