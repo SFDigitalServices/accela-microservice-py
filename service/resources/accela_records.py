@@ -61,7 +61,24 @@ class AccelaRecords(AccelaSvc):
             # if successful
             if response.status_code == 200:
                 resp.status = falcon.HTTP_200
-                resp.body = json.dumps(response.json())
+                resp_json = response.json()
+
+                # if record id
+                if 'result' in resp_json and 'id' in resp_json['result']:
+                    record_id = resp_json['result']['id']
+                    record_json = json.loads(record)
+
+                    if 'customForms' in record_json:
+                        response_custom_forms = self.accela.records.update_record_custom_forms(
+                            record_id, json.dumps(record_json['customForms']), params)
+                        resp_json['customForms'] = response_custom_forms.json()
+
+                    if 'customTables' in record_json:
+                        response_custom_tables = self.accela.records.update_record_custom_tables(
+                            record_id, json.dumps(record_json['customTables']), params)
+                        resp_json['customTables'] = response_custom_tables.json()
+
+                resp.body = json.dumps(resp_json)
             else:
                 with sentry_sdk.configure_scope() as scope:
                     scope.set_extra(
