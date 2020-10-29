@@ -18,7 +18,7 @@ def client():
 
 def test_create_record(client):
     """ Test Create Record """
-    with open('tests/mocks/create_record_adu.json', 'r') as file_obj:
+    with open('tests/mocks/create_record_consolidated.json', 'r') as file_obj:
         mock_record = json.load(file_obj)
 
     assert mock_record
@@ -29,6 +29,8 @@ def test_create_record(client):
         assert mock_custom_forms
         mock_custom_tables = mock_record.pop('customTables', None)
         assert mock_custom_tables
+        mock_comments = mock_record.pop('comments', None)
+        assert mock_comments
 
         response = client.simulate_post(
             '/records',
@@ -55,6 +57,16 @@ def test_create_record(client):
             response = client.simulate_put(
                 '/records/'+record_id+'/customTables',
                 body=json.dumps(mock_custom_tables))
+            content = json.loads(response.content)
+
+            assert response.status_code == 200
+            if 'status' in content:
+                assert content['status'] == 200
+
+            # Test update_record_comments
+            response = client.simulate_put(
+                '/records/'+record_id+'/comments',
+                body=json.dumps(mock_comments))
             content = json.loads(response.content)
 
             assert response.status_code == 200
