@@ -78,6 +78,11 @@ class AccelaRecords(AccelaSvc):
                             record_id, json.dumps(record_json['customTables']), params)
                         resp_json['customTables'] = response_custom_tables.json()
 
+                    if 'comments' in record_json:
+                        response_comments = self.accela.records.create_record_comments(
+                            record_id, json.dumps(record_json['comments']), params)
+                        resp_json['comments'] = response_comments.json()
+
                 resp.body = json.dumps(resp_json)
             else:
                 with sentry_sdk.configure_scope() as scope:
@@ -116,6 +121,9 @@ class AccelaRecords(AccelaSvc):
                             record_ids, data, params)
                     elif path == 'customTables':
                         response = self.accela.records.update_record_custom_tables(
+                            record_ids, data, params)
+                    elif path == 'comments':
+                        response = self.accela.records.create_record_comments(
                             record_ids, data, params)
 
                     # if successful
