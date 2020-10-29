@@ -14,8 +14,8 @@ sentry-sdk = "*"
 pytest = "*"
 pytest-cov = "*"
 pre-commit = "*"
-pylint = "*"
-accela-rest-sdk = {git = "https://github.com/SFDigitalServices/accela-rest-sdk-py.git",ref = "master"}
+pylint = "==2.4.*"
+accela-rest-sdk = {git = "https://github.com/SFDigitalServices/accela-rest-sdk-py.git",ref = "main"}
 
 [requires]
 python_version = "3.7"
