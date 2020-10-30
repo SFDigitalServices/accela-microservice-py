@@ -4,17 +4,22 @@ import json
 import jsend
 import falcon
 import sentry_sdk
-from .hooks import validate_access
+from .hooks import validate_access, validate_required_fields
 from .accela_svc import AccelaSvc
 
 @falcon.before(validate_access)
+@falcon.before(validate_required_fields, {'headers':['X-ACCELA-ENV', 'X-ACCELA-USERNAME']})
 class AccelaRecords(AccelaSvc):
     """ Records class """
+
     def on_get(self, req, resp, **kwarg):
         """ GET requests for records """
         if 'ids' in kwarg:
 
-            self.init()
+            self.init({
+                'ACCELA_ENVIRONMENT':req.get_header('X-ACCELA-ENV'),
+                'ACCELA_USERNAME':req.get_header('X-ACCELA-USERNAME')
+            })
 
             record_id = kwarg['ids']
             params = req.params
@@ -51,7 +56,10 @@ class AccelaRecords(AccelaSvc):
 
             record = req.stream.read(sys.maxsize)
 
-            self.init()
+            self.init({
+                'ACCELA_ENVIRONMENT':req.get_header('X-ACCELA-ENV'),
+                'ACCELA_USERNAME':req.get_header('X-ACCELA-USERNAME')
+            })
             response = self.accela.records.create_record(record, params)
 
             # default
@@ -100,7 +108,10 @@ class AccelaRecords(AccelaSvc):
         """ PUT requests for records """
         if 'ids' in kwarg:
 
-            self.init()
+            self.init({
+                'ACCELA_ENVIRONMENT':req.get_header('X-ACCELA-ENV'),
+                'ACCELA_USERNAME':req.get_header('X-ACCELA-USERNAME')
+            })
 
             record_ids = kwarg['ids']
 

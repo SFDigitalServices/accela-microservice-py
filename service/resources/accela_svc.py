@@ -6,10 +6,13 @@ class AccelaSvc:
 
     accela = None
 
-    def init(self):
+    def init(self, opt):
         """ initialize accela """
-        self.load_config()
-        self.load_token()
+        if('ACCELA_ENVIRONMENT' in opt and 'ACCELA_USERNAME' in opt):
+            env = opt['ACCELA_ENVIRONMENT']
+            user = opt['ACCELA_USERNAME']
+            self.load_config()
+            self.load_token(env, user)
 
     def load_config(self):
         """ load configuration """
@@ -20,11 +23,9 @@ class AccelaSvc:
 
         self.accela = Accela(config)
 
-    def load_token(self):
+    def load_token(self, environment, username):
         """ load token """
-        environment = os.environ.get('ACCELA_ENVIRONMENT')
-        username = os.environ.get('ACCELA_USERNAME')
-        password = os.environ.get('ACCELA_PASSWORD')
+        password = os.environ.get('ACCELA_'+environment+'_'+username+'_PASSWORD')
         scope = os.environ.get('ACCELA_SCOPE')
 
         self.accela.client.get_token(username, password, scope, environment)

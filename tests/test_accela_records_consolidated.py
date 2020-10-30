@@ -14,6 +14,8 @@ CLIENT_HEADERS = {
 def client():
     """ client fixture """
     CLIENT_HEADERS['ACCESS_KEY'] = os.environ.get('ACCESS_KEY')
+    CLIENT_HEADERS['X-ACCELA-USERNAME'] = os.environ.get('ACCELA_USERNAME')
+    CLIENT_HEADERS['X-ACCELA-ENV'] = os.environ.get('ACCELA_ENVIRONMENT')
     return testing.TestClient(app=service.microservice.start_service(), headers=CLIENT_HEADERS)
 
 def test_create_record(client):
