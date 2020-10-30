@@ -25,7 +25,7 @@ def test_records_no_access_key():
 def test_get_records_ids(client):
     """ Test Get Records with ids """
     response = client.simulate_get(
-        '/records/CCSF-18CAP-00000-008YI',
+        '/records/20CAP-00000-000LZ',
         params={'expand':'customTables,customForms'})
     assert response.status_code == 200
 
@@ -44,7 +44,7 @@ def test_get_records_empty(client):
     response = client.simulate_get('/records')
     assert response.status_code == 400
 
-    response = client.simulate_get('/records/')
+    response = client.simulate_get('/records/00000')
     assert response.status_code == 400
 
 

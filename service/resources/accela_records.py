@@ -125,6 +125,9 @@ class AccelaRecords(AccelaSvc):
                     elif path == 'comments':
                         response = self.accela.records.create_record_comments(
                             record_ids, data, params)
+                    elif path == 'addresses':
+                        response = self.accela.records.create_record_addresses(
+                            record_ids, data, params)
 
                     # if successful
                     if response is not None:
