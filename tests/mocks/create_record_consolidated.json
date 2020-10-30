@@ -1,11 +1,24 @@
 {
 	"type":{"id":"Planning-Project-Project-PRJ"},
-	"name": "Accela API Automated Test",
+	"name": "Accela API Test",
 	"description": "Automated Testing of Accela API",
 	"parcels" : 
 	[
 		{
-			"parcelNumber" : "3512008"
+			"parcelNumber" : "1234001"
+		}
+	],
+	"addresses" :
+	[
+		{
+			"streetName": "PAGE",
+			"streetStart": "1301",
+			"postalCode": "94117",
+			"streetSuffix": {
+				"text": "ST",
+				"value": "ST"
+			},
+			"neighborhood": "1234001"
 		}
 	],
 	"contacts": 

@@ -29,8 +29,6 @@ def test_create_record(client):
         assert mock_custom_forms
         mock_custom_tables = mock_record.pop('customTables', None)
         assert mock_custom_tables
-        mock_comments = mock_record.pop('comments', None)
-        assert mock_comments
 
         response = client.simulate_post(
             '/records',
@@ -64,9 +62,27 @@ def test_create_record(client):
                 assert content['status'] == 200
 
             # Test update_record_comments
+            with open('tests/mocks/create_record_comments.json', 'r') as file_obj:
+                mock_comments = json.load(file_obj)
+            assert mock_comments
+
             response = client.simulate_put(
                 '/records/'+record_id+'/comments',
                 body=json.dumps(mock_comments))
+            content = json.loads(response.content)
+
+            assert response.status_code == 200
+            if 'status' in content:
+                assert content['status'] == 200
+
+            # Test update_record_addresses
+            with open('tests/mocks/create_record_addresses.json', 'r') as file_obj:
+                mock_addresses = json.load(file_obj)
+            assert mock_addresses
+
+            response = client.simulate_put(
+                '/records/'+record_id+'/addresses',
+                body=json.dumps(mock_addresses))
             content = json.loads(response.content)
 
             assert response.status_code == 200

@@ -38,7 +38,7 @@ def test_create_record(client):
 
             assert 'customId' in content['result']
 
-            for custom_type in ['customForms', 'customTables', 'comments']: 
+            for custom_type in ['customForms', 'customTables', 'comments']:
                 assert custom_type in content
                 assert 'status' in content[custom_type]
                 assert content[custom_type]['status'] == 200
