@@ -10,10 +10,17 @@ CLIENT_HEADERS = {
     "ACCESS_KEY": "1234567"
 }
 
+CUSTOM_HEADERS = {
+    "X-ACCELA-USERNAME": "MY_USER",
+    "X-ACCELA-ENV": "MY_ENV"
+}
+
 @pytest.fixture()
 def client():
     """ client fixture """
     CLIENT_HEADERS['ACCESS_KEY'] = os.environ.get('ACCESS_KEY')
+    CLIENT_HEADERS['X-ACCELA-USERNAME'] = os.environ.get('ACCELA_USERNAME')
+    CLIENT_HEADERS['X-ACCELA-ENV'] = os.environ.get('ACCELA_ENVIRONMENT')
     return testing.TestClient(app=service.microservice.start_service(), headers=CLIENT_HEADERS)
 
 def test_records_no_access_key():
@@ -21,6 +28,15 @@ def test_records_no_access_key():
     client_no_access_key = testing.TestClient(service.microservice.start_service())
     response = client_no_access_key.simulate_get('/records')
     assert response.status_code == 403
+
+def test_post_missing_headers():
+    # pylint: disable=unused-argument
+    """ test post with missing headers """
+    CLIENT_HEADERS['ACCESS_KEY'] = os.environ.get('ACCESS_KEY')
+    client_no_req_headers = testing.TestClient(
+        app=service.microservice.start_service(), headers=CLIENT_HEADERS)
+    response = client_no_req_headers.simulate_get('/records')
+    assert response.status_code == 400
 
 def test_get_records_ids(client):
     """ Test Get Records with ids """
